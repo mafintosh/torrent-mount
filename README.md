@@ -15,7 +15,7 @@ Open a terminal and cd to a directory where you want to mount your torrent
 	torrent-mount magnet:?xt=urn:btih:ef330b39f4801d25b4245212e75a38634bfc856e
 
 After doing that open the same directory using a file browser.
-The files of the torrent should be mounted there now and you should be able to double-click them to start streaming as regular files! (beware that it can take a little for the first file to opensince the swarm needs to warm up)
+The files of the torrent should be mounted there now and you should be able to double-click them to start streaming as regular files! (beware that it can take a little while for the first file to open since the swarm needs to warm up)
 
 ## License
 
