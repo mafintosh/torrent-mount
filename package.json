@@ -1,7 +1,7 @@
 {
   "name": "torrent-mount",
   "version": "0.0.0",
-  "description": "Mount a torrent as a filesystem in realtime",
+  "description": "Mount a torrent (or magnet link) as a filesystem in real time using torrent-stream and fuse. AKA MAD SCIENCE!",
   "repository": "mafintosh/torrent-mount",
   "dependencies": {
     "single-line-log": "^0.3.1",
