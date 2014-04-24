@@ -1,0 +1,17 @@
+{
+  "name": "torrent-mount",
+  "version": "0.0.0",
+  "description": "Mount a torrent as a filesystem in realtime",
+  "repository": "mafintosh/torrent-mount",
+  "dependencies": {
+    "single-line-log": "^0.3.1",
+    "prettysize": "0.0.3",
+    "fuse4js": "^0.1.9",
+    "torrent-stream": "^0.7.2",
+    "read-torrent": "^1.0.0",
+    "mkdirp": "^0.4.0"
+  },
+  "bin": {
+    "torrent-mount": "./bin.js"
+  }
+}
