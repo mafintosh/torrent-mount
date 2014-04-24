@@ -1,6 +1,8 @@
 # torrent-mount
 
-Mount a torrent (or magnet link) as a filesystem in real time using [torrent-stream](https://github.com/mafintosh/torrent-stream) and fuse. AKA MAD SCIENCE!
+Mount a torrent (or magnet link) as a filesystem in real time using [torrent-stream](https://github.com/mafintosh/torrent-stream) and fuse.
+
+AKA MAD SCIENCE!
 
 	npm install -g torrent-mount
 
