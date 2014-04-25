@@ -4,6 +4,9 @@ var drive = require('./');
 var readTorrent = require('read-torrent');
 var log = require('single-line-log');
 var prettysize = require('prettysize');
+var rimraf = require('rimraf');
+var fs = require('fs');
+var umount = require('./umount');
 
 if (process.argv.length < 3) {
 	console.error('Usage: torrent-mount torrent_or_magnet_link [directory]');
@@ -16,11 +19,11 @@ readTorrent(process.argv[2], function(err, torrent) {
 		process.exit(2);
 	}
 
-	var mnt = process.argv[3] || '.';
+	var mnt = fs.realpathSync(process.argv[3] || '.');
 	var engine = drive(torrent, mnt);
 
-	log('Initializing...');
-	engine.on('ready', function() {
+	log('Initializing... ');
+	engine.on('mount', function(mnt) {
 		log('Mounted '+engine.files.length+' files, '+prettysize(engine.torrent.length)+' in '+ engine.torrent.name);
 		log.clear();
 
@@ -36,5 +39,18 @@ readTorrent(process.argv[2], function(err, torrent) {
 
 		setInterval(status, 500);
 		status();
+
+		var onclose = function() {
+			engine.destroy(function() {
+				umount(mnt)
+				setTimeout(function() {
+					rimraf.sync(mnt);
+					process.exit();
+				}, 250);
+			});
+		};
+
+		process.on('SIGINT', onclose);
+		process.on('SIGTERM', onclose);
 	});
 });

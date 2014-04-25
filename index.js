@@ -2,34 +2,12 @@ var f4js = require('fuse4js');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var torrents = require('torrent-stream');
-var proc = require('child_process');
 var path = require('path');
+var umount = require('./umount');
 
 var ENOENT = -2;
 var EPERM = -1;
 var EINVAL = -22;
-
-
-var noop = function() {};
-
-var spawn = function(cmd, args, cb) {
-	var ps = proc.spawn(cmd, args);
-	var done = function() {
-		ps.removeListener('error', done);
-		ps.removeListener('exit', done);
-		cb();
-	};
-	ps.on('exit', done);
-	ps.on('error', done);
-};
-
-var umount = function(dir, cb) { // this is horrible - must be a better way to do this
-	spawn('umount', [dir], function() {
-		spawn('fusermount', ['-u', dir], function() {
-			if (cb) cb();
-		});
-	});
-};
 
 module.exports = function(source, mnt) {
 	if (!mnt) mnt = '.';
@@ -38,10 +16,11 @@ module.exports = function(source, mnt) {
 	var engine = torrents(source);
 
 	engine.on('ready', function() {
-		mnt = path.join(mnt, engine.torrent.name);
+		mnt = path.join(mnt, path.resolve('/', engine.torrent.name));
 		umount(mnt, function() {
 			mkdirp(mnt, function() {
 				f4js.start(mnt, handlers, false, []);
+				engine.emit('mount', mnt);
 			});
 		});
 		engine.files.forEach(function(file) {
