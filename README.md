@@ -17,6 +17,8 @@ Open a terminal and cd to a directory where you want to mount your torrent
 After doing that open the same directory using a file browser.
 The files of the torrent should be mounted there now and you should be able to double-click them to start streaming as regular files! (beware that it can take a little while for the first file to open since the swarm needs to warm up)
 
+![MIND BLOWN](http://i.imgur.com/C4buo.gif)
+
 ## License
 
 MIT
