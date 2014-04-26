@@ -26,7 +26,13 @@ module.exports = function(source, mnt) {
 		engine.files.forEach(function(file) {
 			file.path = file.path.slice(engine.torrent.name.length+1);
 			file.select();
-		})
+		});
+		engine.on('uninterested', function() {
+			engine.swarm.pause();
+		});
+		engine.on('interested', function() {
+			engine.swarm.resume();
+		});
 	});
 
 	var find = function(path) {
