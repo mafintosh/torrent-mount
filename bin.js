@@ -21,8 +21,13 @@ readTorrent(process.argv[2], function(err, torrent) {
 
 	var mnt = fs.realpathSync(process.argv[3] || '.');
 	var engine = drive(torrent, mnt);
+	var hs = 0;
 
-	log('Initializing... ');
+	engine.on('hotswap', function() {
+		hs++;
+	});
+
+	log('Initializing swarm and verifying data...\n');
 	engine.on('mount', function(mnt) {
 		log('Mounted '+engine.files.length+' files, '+prettysize(engine.torrent.length)+' in '+ engine.torrent.name);
 		log.clear();
@@ -33,8 +38,15 @@ readTorrent(process.argv[2], function(err, torrent) {
 
 		var status = function() {
 			var down = prettysize(engine.swarm.downloaded);
-			var speed = prettysize(engine.swarm.downloadSpeed())+'/s';
-			log('Downloaded '+down+' ('+speed+') from '+engine.swarm.wires.reduce(notChoked, 0)+'/'+engine.swarm.wires.length+' peers\n');
+			var downSpeed = prettysize(engine.swarm.downloadSpeed()).replace('Bytes', 'b')+'/s';
+			var up = prettysize(engine.swarm.uploaded);
+			var upSpeed = prettysize(engine.swarm.uploadSpeed()).replace('Bytes', 'b')+'/s';
+
+			log(
+				'Connected to '+engine.swarm.wires.reduce(notChoked, 0)+'/'+engine.swarm.wires.length+' peers\n'+
+				'Downloaded '+down+' ('+downSpeed+') with '+hs+' hotswaps\n'+
+				'Uploaded '+up+ ' ('+upSpeed+')\n'
+			);
 		};
 
 		setInterval(status, 500);
