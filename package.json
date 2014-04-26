@@ -7,7 +7,7 @@
     "single-line-log": "^0.3.1",
     "prettysize": "0.0.3",
     "fuse4js": "^0.1.9",
-    "torrent-stream": "^0.7.2",
+    "torrent-stream": "^0.7.4",
     "read-torrent": "^1.0.0",
     "mkdirp": "^0.4.0",
     "rimraf": "^2.2.6"
