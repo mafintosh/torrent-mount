@@ -6,6 +6,8 @@ var log = require('single-line-log');
 var prettysize = require('prettysize');
 var rimraf = require('rimraf');
 var fs = require('fs');
+var proc = require('child_process');
+var path = require('path');
 var umount = require('./umount');
 
 if (process.argv.length < 3) {
@@ -52,17 +54,15 @@ readTorrent(process.argv[2], function(err, torrent) {
 		setInterval(status, 500);
 		status();
 
-		var onclose = function() {
+		var close = function() {
+			process.removeListener('SIGINT', close);
+			process.removeListener('SIGTERM', close);
 			engine.destroy(function() {
-				umount(mnt)
-				setTimeout(function() {
-					rimraf.sync(mnt);
-					process.exit();
-				}, 250);
+				proc.fork(path.join(__dirname, 'destroy.js'), [mnt, ''+process.pid]);
 			});
 		};
 
-		process.on('SIGINT', onclose);
-		process.on('SIGTERM', onclose);
+		process.on('SIGINT', close);
+		process.on('SIGTERM', close);
 	});
 });
