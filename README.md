@@ -19,6 +19,12 @@ The files of the torrent should be mounted there now and you should be able to d
 
 ![MIND BLOWN](http://i.imgur.com/C4buo.gif)
 
+## Troubleshoot
+
+You should install OS X Fuse on OS X systems:
+
+	brew install osxfuse
+
 ## License
 
 MIT
