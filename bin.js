@@ -51,18 +51,22 @@ readTorrent(process.argv[2], function(err, torrent) {
 			);
 		};
 
-		setInterval(status, 500);
+		var interval = setInterval(status, 500);
 		status();
 
-		var close = function() {
-			process.removeListener('SIGINT', close);
-			process.removeListener('SIGTERM', close);
+		var closing = false;
+		process.on('SIGINT', function() {
+			if (closing) return;
+			clearInterval(interval);
+			log('Shutting down...\n');
+			closing = true;
 			engine.destroy(function() {
 				proc.fork(path.join(__dirname, 'destroy.js'), [mnt, ''+process.pid]);
 			});
-		};
+		});
 
-		process.on('SIGINT', close);
-		process.on('SIGTERM', close);
+		process.on('SIGTERM', function() {
+			process.exit();
+		});
 	});
 });
