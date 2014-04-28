@@ -21,9 +21,13 @@ The files of the torrent should be mounted there now and you should be able to d
 
 ## Troubleshoot
 
-You should install OS X Fuse and pkg-config on OS X systems:
+Download the latest osxfuse `dmg` using this link and install it
 
-	brew install pkg-config osxfuse
+	http://sourceforge.net/projects/osxfuse/files/latest/download?source=files
+	
+The one provided by brew doesn't always seem to work. You also need pkg-config:
+
+	brew install pkg-config
 
 ## License
 
