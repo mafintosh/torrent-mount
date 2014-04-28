@@ -23,7 +23,7 @@ The files of the torrent should be mounted there now and you should be able to d
 
 Download the latest osxfuse `dmg` using this link and install it
 
-	http://sourceforge.net/projects/osxfuse/files/latest/download?source=files
+http://sourceforge.net/projects/osxfuse/files/latest/download?source=files
 	
 The one provided by brew doesn't always seem to work. You also need pkg-config:
 
