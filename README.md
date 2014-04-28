@@ -21,9 +21,9 @@ The files of the torrent should be mounted there now and you should be able to d
 
 ## Troubleshoot
 
-You should install OS X Fuse on OS X systems:
+You should install OS X Fuse and pkg-config on OS X systems:
 
-	brew install osxfuse
+	brew install pkg-config osxfuse
 
 ## License
 
