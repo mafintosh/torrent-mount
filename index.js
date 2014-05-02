@@ -16,6 +16,14 @@ module.exports = function(source, mnt) {
 	var engine = torrents(source);
 
 	engine.on('ready', function() {
+		if (engine.torrent.name === (engine.files[0] && engine.files[0].path)) {
+			var dir = engine.torrent.name.replace(/\.[^.]+$/, '');
+			engine.torrent.files.forEach(function(file) {
+				file.path = path.join(dir, file.path);
+			});
+			engine.torrent.name = dir;
+		}
+
 		mnt = path.join(mnt, path.resolve('/', engine.torrent.name));
 		umount(mnt, function() {
 			mkdirp(mnt, function() {
