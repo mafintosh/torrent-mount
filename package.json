@@ -10,7 +10,7 @@
     "read-torrent": "^1.0.0",
     "rimraf": "^2.2.6",
     "single-line-log": "^0.3.1",
-    "torrent-stream": "^0.10.2"
+    "torrent-stream": "^0.13.3"
   },
   "bin": {
     "torrent-mount": "./bin.js"
