@@ -10,17 +10,20 @@ You also need to install fuse. See [this link](https://github.com/bcle/fuse4js#r
 
 ## Usage
 
-Open a terminal and cd to a directory where you want to mount your torrent
+Open a terminal and cd to a directory where you want to mount your torrent 
 
-	torrent-mount magnet:?xt=urn:btih:ef330b39f4801d25b4245212e75a38634bfc856e
+```	
+torrent-mount magnet:?xt=urn:btih:ef330b39f4801d25b4245212e75a38634bfc856e
+```
+```
+Usage: torrent-mount <source>... [options]
 
-    Usage: torrent-mount <source>... [options]
-    
-    source     .torrent file or magnet link to open
-    
-    Options:
-       -m PATH, --mount PATH   Mount location path [directory]  [.]
-       -l, --lazy              Download only if accessed
+source     .torrent file or magnet link to open
+
+Options:
+	-m PATH, --mount PATH   Mount location path [directory]  [.]
+	-l, --lazy              Download only if accessed
+```
 
 After doing that open the same directory using a file browser.
 The files of the torrent should be mounted there now and you should be able to double-click them to start streaming as regular files!
