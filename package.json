@@ -10,9 +10,20 @@
     "read-torrent": "^1.0.0",
     "rimraf": "^2.2.6",
     "single-line-log": "^0.3.1",
-    "torrent-stream": "^0.13.3"
+    "torrent-stream": "^0.13.3",
+    "nomnom": "^1.8.0"
   },
   "bin": {
     "torrent-mount": "./bin.js"
-  }
+  },
+  "readme": "# torrent-mount\n\nMount a torrent (or magnet link) as a filesystem in real time using [torrent-stream](https://github.com/mafintosh/torrent-stream) and fuse.\n\nAKA MAD SCIENCE!\n\n\tnpm install -g torrent-mount\n\nYou also need to install fuse. See [this link](https://github.com/bcle/fuse4js#requirements) for more info.\n\n## Usage\n\nOpen a terminal and cd to a directory where you want to mount your torrent\n\n\ttorrent-mount magnet:?xt=urn:btih:ef330b39f4801d25b4245212e75a38634bfc856e\n\nAfter doing that open the same directory using a file browser.\nThe files of the torrent should be mounted there now and you should be able to double-click them to start streaming as regular files!\n\n![MIND BLOWN](http://i.imgur.com/C4buo.gif)\n\n## Troubleshoot\n\nDownload the latest osxfuse `dmg` using this link and install it\n\nhttp://sourceforge.net/projects/osxfuse/files/latest/download?source=files\n\t\nThe one provided by brew doesn't always seem to work. You also need pkg-config:\n\n\tbrew install pkg-config\n\n## License\n\nMIT\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/mafintosh/torrent-mount/issues"
+  },
+  "homepage": "https://github.com/mafintosh/torrent-mount",
+  "_id": "torrent-mount@1.0.8",
+  "_shasum": "2307777177a24a4109e3084d3e935b505590e28a",
+  "_from": "torrent-mount@",
+  "_resolved": "https://registry.npmjs.org/torrent-mount/-/torrent-mount-1.0.8.tgz"
 }

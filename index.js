@@ -9,7 +9,7 @@ var ENOENT = -2;
 var EPERM = -1;
 var EINVAL = -22;
 
-module.exports = function(source, mnt) {
+module.exports = function(source, mnt, isLazy) {
 	if (!mnt) mnt = '.';
 
 	var handlers = {};
@@ -31,10 +31,12 @@ module.exports = function(source, mnt) {
 				engine.emit('mount', mnt);
 			});
 		});
-		engine.files.forEach(function(file) {
-			file.path = file.path.slice(engine.torrent.name.length+1);
-			file.select();
-		});
+        if(!isLazy) {
+            engine.files.forEach(function (file) {
+                file.path = file.path.slice(engine.torrent.name.length + 1);
+                file.select();
+            });
+        }
 		engine.on('uninterested', function() {
 			engine.swarm.pause();
 		});
