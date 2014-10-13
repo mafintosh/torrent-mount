@@ -8,37 +8,31 @@ var rimraf = require('rimraf');
 var fs = require('fs');
 var proc = require('child_process');
 var path = require('path');
+var minimist = require('minimist')
 var umount = require('./umount');
-var opts = require("nomnom")
-    .script("torrent-mount")
-    .options({
-        source: {
-            position: 0,
-            help: ".torrent file or magnet link to open",
-            list: true,
-            required: true
-        },
-        mount: {
-            abbr: 'm',
-            metavar: 'PATH',
-            help: "Mount location path [directory]",
-            default: "."
-        },
-        lazy: {
-            abbr: 'l',
-            flag: true,
-            help: "Download only if accessed"
-        }
-    }).parse();
 
-readTorrent(opts["source"][0], function(err, torrent) {
+var argv = minimist(process.argv.slice(2), {
+	alias: {mount:'m', lazy:'l'},
+	boolean: ['lazy']
+})
+
+if (!argv._[0]) {
+	console.error('Usage: torrent-mount torrent_or_magnet_link [directory]')
+	console.error()
+	console.error('  --mount,  -m   Mount location path [directory]')
+	console.error('  --lazy,   -l   Download files only if accessed')
+	console.error()
+	process.exit(1)
+}
+
+readTorrent(argv._[0], function(err, torrent) {
 	if (err) {
 		console.error(err.message);
 		process.exit(2);
 	}
 
-	var mnt = fs.realpathSync(opts["mount"]);
-    var isLazy = opts["lazy"]
+	var mnt = fs.realpathSync(argv.mount || '.');
+	var isLazy = argv.lazy
 	var engine = drive(torrent, mnt, isLazy);
 	var hs = 0;
 

@@ -5,13 +5,13 @@
   "repository": "mafintosh/torrent-mount",
   "dependencies": {
     "fuse4js": "^0.1.9",
+    "minimist": "^1.1.0",
     "mkdirp": "^0.4.0",
     "prettysize": "0.0.3",
     "read-torrent": "^1.0.0",
     "rimraf": "^2.2.6",
     "single-line-log": "^0.3.1",
-    "torrent-stream": "^0.13.3",
-    "nomnom": "^1.8.0"
+    "torrent-stream": "^0.13.3"
   },
   "bin": {
     "torrent-mount": "./bin.js"
