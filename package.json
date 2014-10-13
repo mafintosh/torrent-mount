@@ -10,9 +10,14 @@
     "read-torrent": "^1.0.0",
     "rimraf": "^2.2.6",
     "single-line-log": "^0.3.1",
-    "torrent-stream": "^0.13.3"
+    "torrent-stream": "^0.13.3",
+    "nomnom": "^1.8.0"
   },
   "bin": {
     "torrent-mount": "./bin.js"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/mafintosh/torrent-mount/issues"
+  },
+  "homepage": "https://github.com/mafintosh/torrent-mount"
 }

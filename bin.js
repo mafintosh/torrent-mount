@@ -9,20 +9,37 @@ var fs = require('fs');
 var proc = require('child_process');
 var path = require('path');
 var umount = require('./umount');
+var opts = require("nomnom")
+    .script("torrent-mount")
+    .options({
+        source: {
+            position: 0,
+            help: ".torrent file or magnet link to open",
+            list: true,
+            required: true
+        },
+        mount: {
+            abbr: 'm',
+            metavar: 'PATH',
+            help: "Mount location path [directory]",
+            default: "."
+        },
+        lazy: {
+            abbr: 'l',
+            flag: true,
+            help: "Download only if accessed"
+        }
+    }).parse();
 
-if (process.argv.length < 3) {
-	console.error('Usage: torrent-mount torrent_or_magnet_link [directory]');
-	process.exit(1);
-}
-
-readTorrent(process.argv[2], function(err, torrent) {
+readTorrent(opts["source"][0], function(err, torrent) {
 	if (err) {
 		console.error(err.message);
 		process.exit(2);
 	}
 
-	var mnt = fs.realpathSync(process.argv[3] || '.');
-	var engine = drive(torrent, mnt);
+	var mnt = fs.realpathSync(opts["mount"]);
+    var isLazy = opts["lazy"]
+	var engine = drive(torrent, mnt, isLazy);
 	var hs = 0;
 
 	engine.on('hotswap', function() {
