@@ -4,7 +4,7 @@
   "description": "Mount a torrent (or magnet link) as a filesystem in real time using torrent-stream and fuse. AKA MAD SCIENCE!",
   "repository": "mafintosh/torrent-mount",
   "dependencies": {
-    "fuse4js": "^0.1.9",
+    "fuse-bindings": "^2.0.0",
     "minimist": "^1.1.0",
     "mkdirp": "^0.4.0",
     "prettysize": "0.0.3",
