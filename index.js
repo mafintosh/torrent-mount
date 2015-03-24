@@ -3,7 +3,6 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var torrents = require('torrent-stream');
 var path = require('path');
-var umount = require('./umount');
 
 var ENOENT = -2;
 var EPERM = -1;
@@ -25,7 +24,7 @@ module.exports = function(source, mnt, isLazy) {
 		}
 
 		mnt = path.join(mnt, path.resolve('/', engine.torrent.name));
-		umount(mnt, function() {
+		fuse.unmount(mnt, function() {
 			mkdirp(mnt, function() {
 				fuse.mount(mnt, handlers);
 				engine.emit('mount', mnt);
@@ -169,7 +168,7 @@ module.exports = function(source, mnt, isLazy) {
 		cb(EPERM);
 	};
 
-	handlers.mkdir = function(path, cb) {
+	handlers.mkdir = function(path, mode, cb) {
 		cb(EPERM);
 	};
 

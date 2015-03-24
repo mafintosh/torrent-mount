@@ -9,7 +9,6 @@ var fs = require('fs');
 var proc = require('child_process');
 var path = require('path');
 var minimist = require('minimist')
-var umount = require('./umount');
 
 var argv = minimist(process.argv.slice(2), {
 	alias: {mount:'m', lazy:'l'},

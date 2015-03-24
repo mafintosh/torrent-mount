@@ -1,10 +1,10 @@
-var umount = require('./umount');
 var rimraf = require('rimraf');
+var fuse = require('fuse-bindings');
 
 var mnt = process.argv[2];
 var pid = Number(process.argv[3]);
 
-umount(mnt, function() {
+fuse.unmount(mnt, function() {
 	rimraf.sync(mnt);
 	process.kill(pid, 'SIGTERM');
 });
