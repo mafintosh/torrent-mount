@@ -63,14 +63,13 @@ readTorrent(argv._[0], function (err, torrent) {
     var interval = setInterval(status, 500)
     status()
 
-    var closing = false
     process.on('SIGINT', function () {
-      if (closing) return
       clearInterval(interval)
       log('Shutting down...\n')
-      closing = true
-      engine.destroy(function () {
-        proc.fork(path.join(__dirname, 'destroy.js'), [mnt, '' + process.pid])
+      fuse.unmount(mnt, function () {
+        engine.destroy(function () {
+          process.exit()
+        })
       })
     })
   })
