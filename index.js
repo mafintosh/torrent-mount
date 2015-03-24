@@ -1,4 +1,4 @@
-var f4js = require('fuse4js');
+var fuse = require('fuse-bindings');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var torrents = require('torrent-stream');
@@ -27,7 +27,7 @@ module.exports = function(source, mnt, isLazy) {
 		mnt = path.join(mnt, path.resolve('/', engine.torrent.name));
 		umount(mnt, function() {
 			mkdirp(mnt, function() {
-				f4js.start(mnt, handlers, false, []);
+				fuse.mount(mnt, handlers);
 				engine.emit('mount', mnt);
 			});
 		});
@@ -125,7 +125,7 @@ module.exports = function(source, mnt, isLazy) {
 		cb(0, files);
 	};
 
-	handlers.read = function(path, offset, len, buf, handle, cb) {
+	handlers.read = function(path, handle, buf, len, offset, cb) {
 		path = path.slice(1);
 
 		var file = find(path);
@@ -157,7 +157,7 @@ module.exports = function(source, mnt, isLazy) {
 		loop();
 	};
 
-	handlers.write = function(path, offset, len, buf, handle, cb) {
+	handlers.write = function(path, handle, buf, len, offset, cb) {
 		cb(EPERM);
 	};
 
@@ -169,7 +169,7 @@ module.exports = function(source, mnt, isLazy) {
 		cb(EPERM);
 	};
 
-	handlers.mkdir = function(path, mode, cb) {
+	handlers.mkdir = function(path, cb) {
 		cb(EPERM);
 	};
 
@@ -181,15 +181,15 @@ module.exports = function(source, mnt, isLazy) {
 		cb(EPERM);
 	};
 
-	handlers.getxattr = function(path, cb) {
+	handlers.getxattr = function(path, name, buffer, length, offset, cb) {
 		cb(EPERM);
 	};
 
-	handlers.setxattr = function(path, name, value, size, a, b, cb) {
+	handlers.setxattr = function(path, name, buffer, length, offset, flags, cb) {
 		cb(0);
 	};
 
-	handlers.statfs = function(cb) {
+	handlers.statfs = function(path, cb) {
 		cb(0, {
 			bsize: 1000000,
 			frsize: 1000000,
