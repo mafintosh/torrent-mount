@@ -16,8 +16,14 @@
   "bin": {
     "torrent-mount": "./bin.js"
   },
+  "scripts": {
+    "test": "standard"
+  },
   "bugs": {
     "url": "https://github.com/mafintosh/torrent-mount/issues"
   },
-  "homepage": "https://github.com/mafintosh/torrent-mount"
+  "homepage": "https://github.com/mafintosh/torrent-mount",
+  "devDependencies": {
+    "standard": "^3.2.1"
+  }
 }
