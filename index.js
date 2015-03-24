@@ -50,6 +50,8 @@ module.exports = function(source, mnt, isLazy) {
 		}, null);
 	};
 
+  handlers.displayFolder = true
+
 	handlers.getattr = function(path, cb) {
 		path = path.slice(1);
 
