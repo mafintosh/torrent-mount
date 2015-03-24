@@ -2,11 +2,10 @@
 
 var drive = require('./')
 var readTorrent = require('read-torrent')
-var log = require('single-line-log')
+var log = require('single-line-log').stdout
 var prettysize = require('prettysize')
+var fuse = require('fuse-bindings')
 var fs = require('fs')
-var proc = require('child_process')
-var path = require('path')
 var minimist = require('minimist')
 
 var argv = minimist(process.argv.slice(2), {
@@ -23,7 +22,7 @@ if (!argv._[0]) {
   process.exit(1)
 }
 
-readTorrent(argv._[0], function (err, torrent) {
+readTorrent(argv._[0], function (err, torrent, raw) {
   if (err) {
     console.error(err.message)
     process.exit(2)
@@ -31,7 +30,7 @@ readTorrent(argv._[0], function (err, torrent) {
 
   var mnt = fs.realpathSync(argv.mount || '.')
   var isLazy = argv.lazy
-  var engine = drive(torrent, mnt, isLazy)
+  var engine = drive(raw, mnt, isLazy)
   var hs = 0
 
   engine.on('hotswap', function () {
@@ -67,8 +66,10 @@ readTorrent(argv._[0], function (err, torrent) {
       clearInterval(interval)
       log('Shutting down...\n')
       fuse.unmount(mnt, function () {
-        engine.destroy(function () {
-          process.exit()
+        fs.rmdir(mnt, function () {
+          engine.destroy(function () {
+            process.exit()
+          })
         })
       })
     })
