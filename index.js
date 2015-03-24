@@ -11,6 +11,8 @@ module.exports = function (source, mnt, isLazy) {
 
   var handlers = {}
   var engine = torrents(source)
+  var ctime = new Date()
+  var mtime = new Date()
 
   engine.on('ready', function () {
     if (engine.torrent.name === (engine.files[0] && engine.files[0].path)) {
@@ -58,6 +60,10 @@ module.exports = function (source, mnt, isLazy) {
 
     var stat = {}
     var file = find(path)
+
+    stat.ctime = ctime
+    stat.mtime = mtime
+    stat.atime = new Date()
 
     if (file) {
       stat.size = file.length
