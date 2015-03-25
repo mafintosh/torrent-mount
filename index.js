@@ -64,6 +64,8 @@ module.exports = function (source, mnt, isLazy) {
     stat.ctime = ctime
     stat.mtime = mtime
     stat.atime = new Date()
+    stat.uid = process.getuid()
+    stat.gid = process.getgid()
 
     if (file) {
       stat.size = file.length
