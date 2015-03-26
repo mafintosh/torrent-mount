@@ -62,16 +62,20 @@ readTorrent(argv._[0], function (err, torrent, raw) {
     var interval = setInterval(status, 500)
     status()
 
-    process.on('SIGINT', function () {
-      clearInterval(interval)
+    var exit = function () {
+      setTimeout(process.kill.bind(process, process.pid), 2000).unref()
+      process.removeListener('SIGINT', exit)
+      process.removeListener('SIGTERM', exit)
       log('Shutting down...\n')
+      clearInterval(interval)
       fuse.unmount(mnt, function () {
         fs.rmdir(mnt, function () {
-          engine.destroy(function () {
-            process.exit()
-          })
+          process.exit()
         })
       })
-    })
+    }
+
+    process.on('SIGINT', exit)
+    process.on('SIGTERM', exit)
   })
 })
