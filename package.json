@@ -10,7 +10,7 @@
     "prettysize": "0.0.3",
     "read-torrent": "^1.3.0",
     "single-line-log": "^0.4.1",
-    "torrent-stream": "^0.18.0"
+    "torrent-stream": "^0.18.1"
   },
   "bin": {
     "torrent-mount": "./bin.js"
